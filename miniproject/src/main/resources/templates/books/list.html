@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>도서 목록</title>
+  <style>
+    :root {
+      --green-50: #f1f8f5;
+      --green-100: #d8f3dc;
+      --green-200: #b7e4c7;
+      --green-300: #95d5b2;
+      --green-400: #74c69d;
+      --green-500: #52b788;
+      --green-600: #40916c;
+      --green-700: #2d6a4f;
+      --brown-200: #ede0d4;
+      --brown-400: #ddb892;
+      --stone-700: #3a3a3a;
+      --white: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Noto Sans KR', sans-serif;
+      background: linear-gradient(180deg, var(--green-50), var(--brown-200));
+      color: var(--stone-700);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 16px;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--green-700), var(--green-400));
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 32px;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.7);
+    }
+
+    a[href] {
+      text-decoration: none;
+      color: var(--green-700);
+      font-weight: 700;
+      border: 1px solid rgba(45,106,79,0.2);
+      border-radius: 12px;
+      background: rgba(45,106,79,0.08);
+      padding: 8px 14px;
+      margin: 6px 4px;
+      display: inline-block;
+      transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    a[href]:hover {
+      background: rgba(45,106,79,0.16);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(45,106,79,0.15);
+    }
+
+    hr.main-line {
+      width: 100%;
+      max-width: 640px;
+      border: none;
+      height: 1.5px;
+      background: linear-gradient(90deg, transparent, rgba(45,106,79,0.3), transparent);
+      margin: 24px 0;
+    }
+
+    .book-card {
+      background: linear-gradient(180deg, var(--white), rgba(255,255,255,0.96));
+      border: 1px solid rgba(45,106,79,0.2);
+      border-radius: 14px;
+      padding: 20px 24px;
+      box-shadow: 0 6px 18px rgba(82,183,136,0.15);
+      margin-bottom: 24px;
+      width: 100%;
+      max-width: 640px;
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .book-card::after {
+      content: "";
+      position: absolute;
+      bottom: -12px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(64,145,108,0.3), rgba(82,183,136,0.05));
+      border-radius: 2px;
+    }
+
+    .book-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 26px rgba(64,145,108,0.25);
+    }
+
+    .book-card p {
+      margin: 6px 0;
+      font-size: 15px;
+    }
+
+    .book-card span {
+      font-weight: 600;
+      color: var(--green-700);
+    }
+
+    .book-card .actions {
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .book-card + .book-card {
+      border-top: 1.5px dashed rgba(64,145,108,0.3);
+      padding-top: 26px;
+    }
+
+    .top-link {
+      margin-bottom: 18px;
+    }
+  </style>
+</head>
+<body>
+<h1>도서 목록</h1>
+<a class="top-link" th:href="@{/books/add}">도서 등록</a>
+<hr class="main-line">
+<div th:each="book : ${books}" class="book-card">
+  <p>ID: <span th:text="${book.id}"></span></p>
+  <p>제목: <span th:text="${book.title}"></span></p>
+  <p>저자: <span th:text="${book.author}"></span></p>
+  <div class="actions">
+    <a th:href="@{'/books/' + ${book.id}}">상세보기</a>
+    <a th:href="@{'/books/delete/' + ${book.id}}">삭제하기</a>
+  </div>
+</div>
+</body>
+</html>
+
+
